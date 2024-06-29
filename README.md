@@ -10,15 +10,13 @@
 4. React-Native Navigation.
 5. Navigation arguments.
 
-## Please check this video
-
 
 
 
 https://github.com/yadavshashankr/Aloha/assets/81215694/56e666a3-2875-4d7c-9ede-0c3cc961235e
 
 
-## Future imporvements
+## Future improvements
 1. Modularisation of UI components.
 2. Animations / Transitions.
 3. Support for Localization.
