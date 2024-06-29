@@ -15,7 +15,7 @@ export const FontFamily = {
   iBMPlexMonoSemiBoldItalic: "IBMPlexMono-SemiBoldItalic",
   iBMPlexMonoThin: "IBMPlexMono-Thin",
   iBMPlexMonoThinItalic: "IBMPlexMono-ThinItalic",
-  body: "IBMPlexMono",
+  body: "IBMPlexMono-Bold",
   labelBoldL: "IBMPlexMono-Bold",
 };
 /* font sizes */
@@ -25,6 +25,7 @@ export const FontSize = {
   size_56: 56,
   size_5xl: 24,
   header_size: 24,
+  bodyBold_lineHeight:20
 };
 /* Colors */
 export const Color = {
@@ -38,7 +39,7 @@ export const Padding = {
   p_5xl: 24,
   p_4xs: 9,
   p_2xs: 11,
-  p_base: 16,
+  p_base: 8,
 };
 /* border radiuses */
 export const Border = {
