@@ -1,3 +1,26 @@
+
+# Aloha! 
+
+## Hawaii Tourism app, dedicated to the beautiful beaches, people and activities of Hawaii.
+
+### Tecnologies used :-
+1. React-Native CLI.
+2. TypeScript.
+3. Stylesheet
+4. React-Native Navigation.
+5. Navigation arguments.
+
+## Please check this video
+
+
+
+
+https://github.com/yadavshashankr/Aloha/assets/81215694/56e666a3-2875-4d7c-9ede-0c3cc961235e
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
