@@ -1,37 +1,37 @@
 import * as React from "react";
 import { ScrollView, Image, StyleSheet, View, Text, FlatList, LogBox, TouchableNativeFeedback } from "react-native";
 import { FontFamily, Padding, Color, FontSize, Border } from "../GlobalStyles";
-import { RootStackParamsList } from "../routes/homeStack";
+import { RootStackParamsList } from "../routes/HomeStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-interface HomeScreenProps{
-  navigation:NativeStackNavigationProp<RootStackParamsList, 'Home'>
+interface HomeScreenProps {
+  navigation: NativeStackNavigationProp<RootStackParamsList, 'Home'>
 }
 
-const HomeFull = ({navigation}:HomeScreenProps) => {
+const HomeFull = ({ navigation }: HomeScreenProps) => {
   return (
-    <View style={{flex:1}}>
-    
-    <ScrollView
-      style={styles.homeFull}
-      indicatorStyle="white"
-      showsVerticalScrollIndicator={true}
-      showsHorizontalScrollIndicator={false}
-      alwaysBounceVertical
-      contentContainerStyle={styles.homeFullContent}>
-      <TopBar/>
+    <View style={{ flex: 1 }}>
 
-      <Banner/>
+      <ScrollView
+        style={styles.homeFull}
+        indicatorStyle="white"
+        showsVerticalScrollIndicator={true}
+        showsHorizontalScrollIndicator={false}
+        alwaysBounceVertical
+        contentContainerStyle={styles.homeFullContent}>
+        <TopBar />
 
-      <Highlights {...navigation}/>
+        <Banner />
 
-      <Sections/>
+        <Highlights {...navigation} />
 
-    </ScrollView>
+        <Sections />
 
-    <BookButton/>
+      </ScrollView>
 
-    <BottomNavigation{...navigation}/>
+      <BookButton />
+
+      <BottomNavigation{...navigation} />
 
     </View>
   );
@@ -40,60 +40,60 @@ const HomeFull = ({navigation}:HomeScreenProps) => {
 const TopBar = () => {
   return (
     <View style={styles.topBar}>
-    <Image
-      style={styles.alohaIcon}
-      resizeMode="cover"
-      source={require("../assets/aloha.png")}
-    />
-  </View>
+      <Image
+        style={styles.alohaIcon}
+        resizeMode="cover"
+        source={require("../assets/aloha.png")}
+      />
+    </View>
   );
 };
 
 const Banner = () => {
   return (
     <View style={[styles.head, styles.headLayout]}>
-    <Image
-      style={[styles.imageIcon, styles.allPosition]}
-      resizeMode="cover"
-      source={require("../assets/image1.png")}
-    />
-  
+      <Image
+        style={[styles.imageIcon, styles.allPosition]}
+        resizeMode="cover"
+        source={require("../assets/image1.png")}
+      />
+
       <Text style={styles.welcomeContainer}>
         {`Welcome
 to`}
         {` `}Hawaii
-    </Text>
-  </View>
+      </Text>
+    </View>
   );
 };
 
 const Sections = () => {
   return (
     <View style={[styles.section, styles.sectionLayout]}>
-     <CategoriesSection/>
-     <TravelGuideSection/>
+      <CategoriesSection />
+      <TravelGuideSection />
     </View>
   );
 };
 
 const Highlights = (navigation: NativeStackNavigationProp<RootStackParamsList, 'Home'>) => {
   return (
-  <View style={styles.highlights}>
-        <Text style={[styles.highlights1, styles.categoriesPosition]}>
+    <View style={styles.highlights}>
+      <Text style={[styles.highlights1, styles.categoriesPosition]}>
         Highlights
-        </Text>
+      </Text>
 
       <FlatList style={styles.flatListStyle}
-      horizontal
-      data={highlightsData}
-      renderItem={(item)=>
-        <View style={{padding: 10}}>
-          <View style={styles.highlightBox}>
-            <Image
-              style={styles.highlightsIcon}
-              resizeMode="cover"
-              source={item.item.image}/>
-            <View style={[styles.highlightsTextView, styles.itemFlexBox]}>
+        horizontal
+        data={highlightsData}
+        renderItem={(item) =>
+          <View style={{ padding: 10 }}>
+            <View style={styles.highlightBox}>
+              <Image
+                style={styles.highlightsIcon}
+                resizeMode="cover"
+                source={item.item.image} />
+              <View style={[styles.highlightsTextView, styles.itemFlexBox]}>
                 <Text style={[styles.highlightTitle, styles.surfingLayout]}>{item.item.title}</Text>
                 <Text
                   style={[
@@ -102,55 +102,55 @@ const Highlights = (navigation: NativeStackNavigationProp<RootStackParamsList, '
                   ]}>
                   {item.item.subtitle}
                 </Text>
-              <View style={styles.bottom}>
-              <TouchableNativeFeedback onPress={() => {
-                navigation.navigate("Surfing", {
-                  description:item.item.description
-                })
-                }}>
-                <Image
-                  style={styles.bottomChild}
-                  resizeMode="cover"
-                  source={require("../assets/group-11.png")}
-                />
-                </TouchableNativeFeedback>
+                <View style={styles.bottom}>
+                  <TouchableNativeFeedback onPress={() => {
+                    navigation.navigate("Surfing", {
+                      description: item.item.description
+                    })
+                  }}>
+                    <Image
+                      style={styles.bottomChild}
+                      resizeMode="cover"
+                      source={require("../assets/group-11.png")}
+                    />
+                  </TouchableNativeFeedback>
+                </View>
               </View>
             </View>
           </View>
-          </View>
-       } />
-      </View>
+        } />
+    </View>
   );
 };
 
 const CategoriesSection = () => {
   return (
     <View>
-    <View style={[styles.sectionChild, styles.sectionLayout]} />
-    <View style={[styles.categories, styles.categoriesPosition]}>
-    <Text style={[styles.categoriesType, styles.contactTypo]}>
-      Catergories
-    </Text>
+      <View style={[styles.sectionChild, styles.sectionLayout]} />
+      <View style={[styles.categories, styles.categoriesPosition]}>
+        <Text style={[styles.categoriesType, styles.contactTypo]}>
+          Catergories
+        </Text>
 
-    <FlatList style={styles.categoriesListStyle}
-      data={categoriesData}
-      scrollEnabled={false}
-      renderItem={(item)=>
-        <View style={{paddingTop:10}}>
-        <View style={[styles.categoryStyle, styles.itemFlexBox]}>
-          <Text style={[styles.categoryTextStyle, styles.categoryTextStyleType]}>
-           {item.item.title}
-          </Text>
-          <Image
-            style={styles.itemChild}
-            resizeMode="cover"
-            source={require("../assets/group-1.png")}
-          />
-        </View>
-        </View>
-      }/>
-  </View>
-  </View>
+        <FlatList style={styles.categoriesListStyle}
+          data={categoriesData}
+          scrollEnabled={false}
+          renderItem={(item) =>
+            <View style={{ paddingTop: 10 }}>
+              <View style={[styles.categoryStyle, styles.itemFlexBox]}>
+                <Text style={[styles.categoryTextStyle, styles.categoryTextStyleType]}>
+                  {item.item.title}
+                </Text>
+                <Image
+                  style={styles.itemChild}
+                  resizeMode="cover"
+                  source={require("../assets/group-1.png")}
+                />
+              </View>
+            </View>
+          } />
+      </View>
+    </View>
   );
 };
 
@@ -158,29 +158,29 @@ const CategoriesSection = () => {
 const TravelGuideSection = () => {
   return (
     <View>
-    <View style={[styles.travelGuide, styles.categoriesPosition]}>
-          <Text style={[styles.categoriesType, styles.contactTypo]}>
-            Travel Guide
-          </Text>
+      <View style={[styles.travelGuide, styles.categoriesPosition]}>
+        <Text style={[styles.categoriesType, styles.contactTypo]}>
+          Travel Guide
+        </Text>
 
-          <View style={[styles.container, styles.containerLayout]}>
-            <View style={[styles.containerChild, styles.containerLayout]} />
-            <Text style={[styles.guideStyle, styles.guidePosition]}>
-              {guideData.fullName}
-            </Text>
-            <Text style={[styles.guideSince, styles.guidePosition]}>
-              Guide since {guideData.joiningYear}
-            </Text>
-            <View style={[styles.button, styles.buttonSpaceBlock]}>
-              <Text style={[styles.contact, styles.contactTypo]}>Contact</Text>
-            </View>
+        <View style={[styles.container, styles.containerLayout]}>
+          <View style={[styles.containerChild, styles.containerLayout]} />
+          <Text style={[styles.guideStyle, styles.guidePosition]}>
+            {guideData.fullName}
+          </Text>
+          <Text style={[styles.guideSince, styles.guidePosition]}>
+            Guide since {guideData.joiningYear}
+          </Text>
+          <View style={[styles.button, styles.buttonSpaceBlock]}>
+            <Text style={[styles.contact, styles.contactTypo]}>Contact</Text>
           </View>
-          <Image
-            style={styles.travelGuideChild}
-            resizeMode="cover"
-            source={require("../assets/ellipse-10.png")}
-          />
         </View>
+        <Image
+          style={styles.travelGuideChild}
+          resizeMode="cover"
+          source={require("../assets/ellipse-10.png")}
+        />
+      </View>
     </View>
   );
 };
@@ -188,85 +188,85 @@ const TravelGuideSection = () => {
 const BookButton = () => {
   return (
     <View style={[styles.button1, styles.navBarFlexBox]}>
-    <Text style={[styles.bookATrip, styles.contactTypo]}>Book a trip</Text>
-  </View>
+      <Text style={[styles.bookATrip, styles.contactTypo]}>Book a trip</Text>
+    </View>
   );
 };
 
 const BottomNavigation = (navigation: NativeStackNavigationProp<RootStackParamsList, 'Home'>) => {
   return (
     <View>
-    <View style={[styles.navBar, styles.navBarFlexBox]}>
+      <View style={[styles.navBar, styles.navBarFlexBox]}>
 
-      <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
-                navigation.navigate("Surfing", {
-                  description:highlightsData[0].description
-                })
-              }}>
-        <View style={[styles.menuItemNative, styles.menuItemSpaceBlock]}>
-  
-          <Image
-            style={[styles.icon, styles.iconLayout]}
-            resizeMode="cover"
-            source={require("../assets/icon.png")}
-          />
-          <Text style={[styles.labelSelected, styles.labelTypo]}>Home</Text>
-        </View>
+        <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+          navigation.navigate("Surfing", {
+            description: highlightsData[0].description
+          })
+        }}>
+          <View style={[styles.menuItemNative, styles.menuItemSpaceBlock]}>
+
+            <Image
+              style={[styles.icon, styles.iconLayout]}
+              resizeMode="cover"
+              source={require("../assets/icon.png")}
+            />
+            <Text style={[styles.labelSelected, styles.labelTypo]}>Home</Text>
+          </View>
         </TouchableNativeFeedback>
 
 
         <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
-                navigation.navigate("Surfing", {
-                  description:highlightsData[0].description
-                })
-              }}>
-        <View style={styles.menuItemSpaceBlock}>
-    
-          <Image
-            style={styles.iconLayout}
-            resizeMode="cover"
-            source={require("../assets/surfing.png")}
-          />
-          <Text style={[styles.labelUnSelected, styles.labelTypo]}>Surfing</Text>
-        </View>
+          navigation.navigate("Surfing", {
+            description: highlightsData[0].description
+          })
+        }}>
+          <View style={styles.menuItemSpaceBlock}>
+
+            <Image
+              style={styles.iconLayout}
+              resizeMode="cover"
+              source={require("../assets/surfing.png")}
+            />
+            <Text style={[styles.labelUnSelected, styles.labelTypo]}>Surfing</Text>
+          </View>
         </TouchableNativeFeedback>
 
 
 
         <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
-                navigation.navigate("Surfing", {
-                  description:highlightsData[0].description
-                })
-                }}>
+          navigation.navigate("Surfing", {
+            description: highlightsData[0].description
+          })
+        }}>
 
-        <View style={styles.menuItemSpaceBlock}>
-      
-          <Image
-            style={styles.iconLayout}
-            resizeMode="cover"
-            source={require("../assets/nightlife.png")}
-          />
-          <Text style={[styles.labelUnSelected, styles.labelTypo]}>Hula</Text>
-        </View>
+          <View style={styles.menuItemSpaceBlock}>
+
+            <Image
+              style={styles.iconLayout}
+              resizeMode="cover"
+              source={require("../assets/nightlife.png")}
+            />
+            <Text style={[styles.labelUnSelected, styles.labelTypo]}>Hula</Text>
+          </View>
 
         </TouchableNativeFeedback>
 
         <TouchableNativeFeedback onPress={() => {
-                navigation.navigate("Surfing", {
-                  description:highlightsData[0].description
-                })
-                }}>
-        <View style={styles.menuItemSpaceBlock}>
-          <Image
-            style={styles.iconLayout}
-            resizeMode="cover"
-            source={require("../assets/filter-hdr.png")}
-          />
-          <Text style={[styles.labelUnSelected, styles.labelTypo]}>Vulcano</Text>
-        </View>
+          navigation.navigate("Surfing", {
+            description: highlightsData[0].description
+          })
+        }}>
+          <View style={styles.menuItemSpaceBlock}>
+            <Image
+              style={styles.iconLayout}
+              resizeMode="cover"
+              source={require("../assets/filter-hdr.png")}
+            />
+            <Text style={[styles.labelUnSelected, styles.labelTypo]}>Vulcano</Text>
+          </View>
         </TouchableNativeFeedback>
       </View>
-      </View>
+    </View>
   );
 };
 
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   scrollScrollViewContent: {
     flexDirection: "row",
     paddingLeft: 10,
-    paddingEnd:20,
+    paddingEnd: 20,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   categoryTextStyleType: {
     fontFamily: FontFamily.iBMPlexMonoRegular,
     fontSize: FontSize.bodyBold_size,
-    lineHeight:FontSize.bodyBold_lineHeight
+    lineHeight: FontSize.bodyBold_lineHeight
   },
   containerLayout: {
     height: 176,
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     color: Color.dark,
     textAlign: "left",
     lineHeight: 20,
-    paddingTop:5,
+    paddingTop: 5,
     position: "absolute",
   },
   buttonSpaceBlock: {
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   menuItemSpaceBlock: {
     paddingTop: 16,
     paddingHorizontal: 0,
-    width:"80%",
+    width: "80%",
     height: 72,
     alignItems: "center",
     flex: 1,
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   alohaIcon: {
     width: 94,
     height: 35,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center'
   },
   topBar: {
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
   },
   welcomeContainer: {
     top: 156,
-    fontFamily:FontFamily.iBMPlexMonoBold,
+    fontFamily: FontFamily.iBMPlexMonoBold,
     fontSize: FontSize.size_56,
     lineHeight: FontSize.size_56,
     display: "flex",
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
     color: Color.dark,
     fontSize: FontSize.bodyBold_size,
     textAlign: "left",
-    lineHeight:FontSize.bodyBold_lineHeight,
+    lineHeight: FontSize.bodyBold_lineHeight,
     top: 0,
     position: "absolute",
     left: 16,
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     height: 170,
   },
   highlightTitle: {
-    paddingTop:5,
+    paddingTop: 5,
     textAlign: "left",
     color: Color.green,
     fontSize: FontSize.size_5xl,
@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
   },
   hightlightSubtitle: {
     width: "100%",
-    paddingEnd:10
+    paddingEnd: 10
   },
   bottomChild: {
     width: 40,
@@ -466,7 +466,7 @@ const styles = StyleSheet.create({
       width: 1,
       height: 1,
     },
-    marginEnd:5,
+    marginEnd: 5,
     shadowColor: "gray",
     borderRadius: Border.br_5xs,
     elevation: 16,
@@ -483,8 +483,8 @@ const styles = StyleSheet.create({
   flatListStyle: {
     top: 30,
     width: "100%",
-    paddingStart:5,
-    marginEnd:5
+    paddingStart: 5,
+    marginEnd: 5
   },
 
   categoriesListStyle: {
@@ -551,7 +551,7 @@ const styles = StyleSheet.create({
     width: 211,
     fontSize: FontSize.size_5xl,
     fontFamily: FontFamily.bodyBold,
-    lineHeight:FontSize.bodyBold_lineHeight
+    lineHeight: FontSize.bodyBold_lineHeight
   },
   guideSince: {
     top: 59,
@@ -567,9 +567,9 @@ const styles = StyleSheet.create({
     top: 112,
     borderWidth: 1,
     justifyContent: "center",
-    fontSize:FontSize.bodyBold_size,
-    lineHeight:FontSize.bodyBold_lineHeight,
-    fontFamily:FontFamily.iBMPlexMonoBold,
+    fontSize: FontSize.bodyBold_size,
+    lineHeight: FontSize.bodyBold_lineHeight,
+    fontFamily: FontFamily.iBMPlexMonoBold,
     paddingBottom: Padding.p_2xs,
     paddingTop: Padding.p_4xs,
     borderColor: Color.green,
@@ -645,7 +645,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     paddingHorizontal: Padding.p_5xl,
     width: 328,
-    height:45
+    height: 45
   },
   homeFull: {
     maxWidth: "100%",
@@ -661,24 +661,24 @@ const styles = StyleSheet.create({
 
 
 // Highlights data
-const highlightsData = [{          
+const highlightsData = [{
   id: 0,
-  title : "Surfing",
-  subtitle : "Best Hawaiian islands for surfing.",
+  title: "Surfing",
+  subtitle: "Best Hawaiian islands for surfing.",
   image: require("../assets/image.png"),
   description: "Hawaii is the capital of modern surfing. This group of Pacific islands gets swell from all directions, so there are plenty of pristine surf spots for all."
 },
-{          
+{
   id: 1,
-  title : "Hula",
-  subtitle : "Try it yourself.",
+  title: "Hula",
+  subtitle: "Try it yourself.",
   image: require("../assets/rectangle-6.png"),
   description: "Hawaii is the capital of modern surfing. This group of Pacific islands gets swell from all directions, so there are plenty of pristine surf spots for all."
 },
-{          
+{
   id: 2,
-  title : "Vulcanoes",
-  subtitle : "Volcanic conditions can change at any time.",
+  title: "Vulcanoes",
+  subtitle: "Volcanic conditions can change at any time.",
   image: require("../assets/rectangle-61.png"),
   description: "Hawaii is the capital of modern surfing. This group of Pacific islands gets swell from all directions, so there are plenty of pristine surf spots for all."
 }
@@ -686,32 +686,32 @@ const highlightsData = [{
 
 
 // Categories data
-const categoriesData = [{          
+const categoriesData = [{
   id: 0,
-  title : "Adventure"
+  title: "Adventure"
 },
-{          
+{
   id: 1,
-  title : "Culinary"
+  title: "Culinary"
 },
-{          
+{
   id: 2,
-  title : "Eco-tourism"
+  title: "Eco-tourism"
 },
-{          
+{
   id: 3,
-  title : "Family"
+  title: "Family"
 },
-{          
+{
   id: 4,
-  title : "Sport"
+  title: "Sport"
 }
 ]
 
 // Guide data
-const guideData = {          
+const guideData = {
   id: 0,
-  title : "Adventure",
+  title: "Adventure",
   fullName: "Madwin Malone",
   joiningYear: "2012",
   contact: "9999999999"
