@@ -2,7 +2,7 @@ import * as React from "react";
 import { ScrollView, Image, StyleSheet, View, Text, FlatList, TouchableNativeFeedback } from "react-native";
 import { FontFamily, Color, FontSize, Padding, Border } from "../GlobalStyles";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamsList } from "../routes/homeStack";
+import { RootStackParamsList } from "../routes/HomeStack";
 import { useRoute } from "@react-navigation/native";
 import { RouteProp } from "@react-navigation/native";
 interface SurfingScreenProps {
@@ -10,73 +10,73 @@ interface SurfingScreenProps {
 }
 
 
-const Surfing = ({navigation}: SurfingScreenProps) => {
+const Surfing = ({ navigation }: SurfingScreenProps) => {
 
 
   const route: RouteProp<{ params: { description: string } }, 'params'> = useRoute()
   const description: string = route.params.description
- 
+
 
   return (
-    <View style={{flex:1}}>
-      
+    <View style={{ flex: 1 }}>
+
       <ScrollView
         style={styles.surfing}
         indicatorStyle="white"
         showsVerticalScrollIndicator={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.surfingScrollViewContent}>
-      
-        <TopBar/>
 
-        <Banner/>
+        <TopBar />
 
-        <Description description={description}/>
+        <Banner />
 
-        <TopSpots/>
+        <Description description={description} />
 
-        <TravelGuideSection/>
+        <TopSpots />
+
+        <TravelGuideSection />
 
       </ScrollView>
 
-      <BookButton/>
-   
-      <BottomNavigation{...navigation}/>
+      <BookButton />
 
-  </View>
+      <BottomNavigation{...navigation} />
+
+    </View>
   );
 };
 
 const TopBar = () => {
   return (
     <View style={styles.topBar}>
-    <Image
-      style={styles.alohaIcon}
-      resizeMode="cover"
-      source={require("../assets/aloha.png")}
-    />
-  </View>
+      <Image
+        style={styles.alohaIcon}
+        resizeMode="cover"
+        source={require("../assets/aloha.png")}
+      />
+    </View>
   );
 };
 
 const Banner = () => {
   return (
     <View style={[styles.head, styles.headLayout]}>
-    <Image
-      style={[styles.imageIcon, styles.topSpotsPosition]}
-      resizeMode="cover"
-      source={require("../assets/image5.png")}
-    />
-    <Text style={[styles.activity, styles.activityType]}>Surfing</Text>
-  </View>
+      <Image
+        style={[styles.imageIcon, styles.topSpotsPosition]}
+        resizeMode="cover"
+        source={require("../assets/image5.png")}
+      />
+      <Text style={[styles.activity, styles.activityType]}>Surfing</Text>
+    </View>
   );
 };
 
 const Description = ({ description }: { description: string }) => {
   return (
     <Text style={[styles.description, styles.descriptionType]}>
-    {description}
-  </Text>
+      {description}
+    </Text>
   );
 };
 
@@ -84,74 +84,74 @@ const TopSpots = () => {
   return (
 
     <View style={styles.section}>
-    <Text style={[styles.topSpots, styles.spotType]}>Top spots</Text>
-    <View style={[styles.itemParent, styles.topSpotsPosition]}>
+      <Text style={[styles.topSpots, styles.spotType]}>Top spots</Text>
+      <View style={[styles.itemParent, styles.topSpotsPosition]}>
 
 
-    <FlatList style={styles.flatListStyle}
-      data={topSpotsData}
-      scrollEnabled={false}
-      renderItem={(item)=>
-        <View style={styles.item}>
-        <Text style={[styles.spot, styles.spotType]}>{item.item.title}</Text>
-        <Image
-          style={styles.imageIcon1}
-          resizeMode="cover"
-          source={item.item.image}
-        />
+        <FlatList style={styles.flatListStyle}
+          data={topSpotsData}
+          scrollEnabled={false}
+          renderItem={(item) =>
+            <View style={styles.item}>
+              <Text style={[styles.spot, styles.spotType]}>{item.item.title}</Text>
+              <Image
+                style={styles.imageIcon1}
+                resizeMode="cover"
+                source={item.item.image}
+              />
+            </View>
+          } />
       </View>
-      }/>
     </View>
-  </View>
   );
 };
 
 const TravelGuideSection = () => {
   return (
     <View style={styles.section1}>
-    <View style={styles.sectionChild} />
-    <View style={styles.travelGuide}>
-      <Text style={[styles.travelGuide1, styles.spotType]}>
-        Travel Guide
-      </Text>
-      <View style={styles.container}>
-        <View style={styles.containerChild} />
-        <Text style={[styles.guide, styles.activityType]}>
-          {guideData.fullName}
+      <View style={styles.sectionChild} />
+      <View style={styles.travelGuide}>
+        <Text style={[styles.travelGuide1, styles.spotType]}>
+          Travel Guide
         </Text>
-        <Text style={[styles.guideSince, styles.descriptionType]}>
-          Guide since {guideData.joiningYear}
-        </Text>
-        <View style={[styles.button, styles.buttonSpaceBlock]}>
-          <Text style={[styles.contact, styles.spotType]}>Contact</Text>
+        <View style={styles.container}>
+          <View style={styles.containerChild} />
+          <Text style={[styles.guide, styles.activityType]}>
+            {guideData.fullName}
+          </Text>
+          <Text style={[styles.guideSince, styles.descriptionType]}>
+            Guide since {guideData.joiningYear}
+          </Text>
+          <View style={[styles.button, styles.buttonSpaceBlock]}>
+            <Text style={[styles.contact, styles.spotType]}>Contact</Text>
+          </View>
         </View>
+        <Image
+          style={styles.travelGuideChild}
+          resizeMode="cover"
+          source={guideData.image}
+        />
       </View>
-      <Image
-        style={styles.travelGuideChild}
-        resizeMode="cover"
-        source={guideData.image}
-      />
     </View>
-  </View>
   );
 };
 
 const BookButton = () => {
   return (
     <View style={[styles.button1, styles.buttonSpaceBlock]}>
-    <Text style={[styles.bookATrip, styles.spotType]}>Book a trip</Text>
-  </View>
+      <Text style={[styles.bookATrip, styles.spotType]}>Book a trip</Text>
+    </View>
   );
 };
 
 const BottomNavigation = (navigation: NativeStackNavigationProp<RootStackParamsList, 'Surfing'>) => {
   return (
-   <View style={[styles.navBar, styles.navBarShadowBox]}>
+    <View style={[styles.navBar, styles.navBarShadowBox]}>
 
 
-       <TouchableNativeFeedback  style={styles.menuItemSpaceBlock} onPress={() => {
-               navigation.navigate("Home")
-                }}>
+      <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+        navigation.navigate("Home")
+      }}>
         <View style={styles.menuItemSpaceBlock}>
           <Image
             style={[styles.icon, styles.iconLayout]}
@@ -160,12 +160,12 @@ const BottomNavigation = (navigation: NativeStackNavigationProp<RootStackParamsL
           />
           <Text style={styles.label}>Home</Text>
         </View>
-        </TouchableNativeFeedback>
+      </TouchableNativeFeedback>
 
 
 
-        <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
-                }}>
+      <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+      }}>
         <View style={[styles.menuItemNative1, styles.menuItemSpaceBlock]}>
           <Image
             style={styles.iconLayout}
@@ -174,11 +174,11 @@ const BottomNavigation = (navigation: NativeStackNavigationProp<RootStackParamsL
           />
           <Text style={[styles.label1, styles.labelTypo]}>Surfing</Text>
         </View>
-        </TouchableNativeFeedback>
+      </TouchableNativeFeedback>
 
 
-        <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
-                }}>
+      <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+      }}>
         <View style={styles.menuItemSpaceBlock}>
           <Image
             style={styles.iconLayout}
@@ -187,10 +187,10 @@ const BottomNavigation = (navigation: NativeStackNavigationProp<RootStackParamsL
           />
           <Text style={[styles.label2, styles.labelTypo]}>Hula</Text>
         </View>
-        </TouchableNativeFeedback>
+      </TouchableNativeFeedback>
 
-        <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
-                }}>
+      <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+      }}>
         <View style={styles.menuItemSpaceBlock}>
           <Image
             style={styles.iconLayout}
@@ -199,8 +199,8 @@ const BottomNavigation = (navigation: NativeStackNavigationProp<RootStackParamsL
           />
           <Text style={[styles.label2, styles.labelTypo]}>Vulcano</Text>
         </View>
-        </TouchableNativeFeedback>
-      </View>
+      </TouchableNativeFeedback>
+    </View>
   );
 };
 
@@ -213,14 +213,14 @@ const styles = StyleSheet.create({
   headLayout: {
     height: 240,
     width: 360,
-  }, 
+  },
   sectionLayout: {
     height: 350,
     width: 360,
-  }, 
+  },
   welcomeContainer: {
     top: 156,
-    fontFamily:FontFamily.iBMPlexMonoBold,
+    fontFamily: FontFamily.iBMPlexMonoBold,
     fontSize: FontSize.size_56,
     lineHeight: FontSize.size_56,
     display: "flex",
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     alignItems: "center",
-  },  
+  },
   containerLayout: {
     height: 176,
     width: 328,
@@ -246,27 +246,27 @@ const styles = StyleSheet.create({
     left: 0,
     position: "absolute",
     top: 0,
-  }, 
-   guideStyle: {
+  },
+  guideStyle: {
     top: 24,
     width: 211,
     fontSize: FontSize.size_5xl,
     fontFamily: FontFamily.bodyBold,
-    lineHeight:FontSize.bodyBold_lineHeight
+    lineHeight: FontSize.bodyBold_lineHeight
   },
-   guidePosition: {
+  guidePosition: {
     left: 24,
     color: Color.dark,
     textAlign: "left",
     lineHeight: 20,
-    paddingTop:5,
+    paddingTop: 5,
     position: "absolute",
   },
   flatListStyle: {
     top: 0,
     width: "100%",
-    paddingStart:5,
-    marginEnd:5,
+    paddingStart: 5,
+    marginEnd: 5,
   },
   contactTypo: {
     fontSize: FontSize.bodyBold_size,
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
   menuItemSpaceBlock: {
     paddingTop: 16,
     paddingHorizontal: 0,
-    width:"80%",
+    width: "80%",
     height: 72,
     alignItems: "center",
     flex: 1,
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
   alohaIcon: {
     width: 94,
     height: 35,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center'
   },
   topBar: {
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
   },
   activity: {
     top: 94,
-    fontFamily:FontFamily.iBMPlexMonoBold,
+    fontFamily: FontFamily.iBMPlexMonoBold,
     fontSize: FontSize.size_56,
     lineHeight: FontSize.size_56,
     display: "flex",
@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: Color.dark,
     marginTop: 32,
-    marginStart:16
+    marginStart: 16
   },
   topSpots: {
     lineHeight: FontSize.bodyBold_lineHeight,
@@ -409,8 +409,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     shadowOpacity: 1,
     elevation: 2,
-    marginTop:2,
-    marginBottom:10,
+    marginTop: 2,
+    marginBottom: 10,
     shadowRadius: 16,
     shadowOffset: {
       width: 1,
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
       width: 1,
       height: 1,
     },
-    marginEnd:5,
+    marginEnd: 5,
     shadowColor: "gray",
     borderRadius: Border.br_5xs,
     elevation: 16,
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
     zIndex: 3,
     width: "100%",
     marginTop: 32,
-    marginStart:16
+    marginStart: 16
   },
   sectionChild: {
     backgroundColor: Color.light,
@@ -500,7 +500,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: "left",
     color: Color.dark,
-    paddingTop:5,
+    paddingTop: 5,
     fontFamily: FontFamily.bodyBold,
   },
   guideSince: {
@@ -615,7 +615,7 @@ const styles = StyleSheet.create({
     paddingBottom: Padding.p_2xs,
     paddingTop: Padding.p_4xs,
     justifyContent: "center",
-    height:45,
+    height: 45,
     width: 328,
   },
   surfing: {
@@ -627,27 +627,27 @@ const styles = StyleSheet.create({
 });
 
 // Top spots data
-const topSpotsData = [{          
+const topSpotsData = [{
   id: 0,
-  title : "Maui",
+  title: "Maui",
   image: require("../assets/image2.png")
 },
-{          
+{
   id: 1,
-  title : "Kauai",
+  title: "Kauai",
   image: require("../assets/kauai.png")
 },
-{          
+{
   id: 2,
-  title : "Honolulu",
+  title: "Honolulu",
   image: require("../assets/honolulu.png")
 }
 ]
 
 // Guide data
-const guideData = {          
+const guideData = {
   id: 0,
-  title : "Adventure",
+  title: "Adventure",
   fullName: "Madwin Malone",
   joiningYear: "2012",
   contact: "9999999999",
