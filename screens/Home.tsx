@@ -1,14 +1,32 @@
 import * as React from "react";
 import { ScrollView, Image, StyleSheet, View, Text, FlatList, LogBox, TouchableNativeFeedback } from "react-native";
 import { FontFamily, Padding, Color, FontSize, Border } from "../GlobalStyles";
-import { RootStackParamsList } from "../routes/HomeStack";
+import { RootStackParamsList } from "../routes/homeStack";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { fetchData } from "./FetchApiData";
 
 interface HomeScreenProps {
   navigation: NativeStackNavigationProp<RootStackParamsList, 'Home'>
 }
 
 const HomeFull = ({ navigation }: HomeScreenProps) => {
+
+  React.useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    await fetchData()
+    .then(result => {
+      console.log("data", result)
+    }).catch(error => {
+      console.error(error)
+    })
+
+  }
+
+  const [data, setData] = React.useState(undefined)
+
   return (
     <View style={{ flex: 1 }}>
 
