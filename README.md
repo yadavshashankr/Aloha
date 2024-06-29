@@ -10,8 +10,6 @@
 4. React-Native Navigation.
 5. Navigation arguments.
 
-## Please check this video
-
 
 
 
