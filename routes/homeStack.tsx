@@ -3,9 +3,16 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
 import Surfing from "../screens/Surfing";
-import Home from "../screens/HomeFull";
+import Home from "../screens/Home";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+export type RootStackParamsList = {
+  Home:undefined,
+  Surfing:{
+    description:string
+  }
+};
 
 const screens = {
   Home: {
@@ -17,7 +24,7 @@ const screens = {
 };
 
 // home stack navigator screens
-const HomeStack = createNativeStackNavigator.apply(screens);
+const HomeStack = createNativeStackNavigator<RootStackParamsList>;
 
 export default HomeStack;
 

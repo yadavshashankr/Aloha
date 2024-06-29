@@ -1,195 +1,371 @@
 import * as React from "react";
-import { Text, StyleSheet, Image, View } from "react-native";
-import { Color, FontFamily, FontSize, Padding, Border } from "../GlobalStyles";
+import { ScrollView, Image, StyleSheet, View, Text, FlatList, LogBox, TouchableNativeFeedback } from "react-native";
+import { FontFamily, Padding, Color, FontSize, Border } from "../GlobalStyles";
+import { RootStackParamsList } from "../routes/homeStack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const Home = () => {
+interface HomeScreenProps{
+  navigation:NativeStackNavigationProp<RootStackParamsList, 'Home'>
+}
+
+const HomeFull = ({navigation}:HomeScreenProps) => {
   return (
-    <View style={styles.home}>
-      <View style={styles.highlights}>
-        <Text style={[styles.highlights1, styles.surfingFlexBox]}>
-          Highlights
-        </Text>
-        <View style={styles.scroll}>
-          <View style={styles.tile1}>
-            <Image
-              style={styles.imageIcon}
-              resizeMode="cover"
-              source={require("../assets/image.png")}
-            />
-            <View style={styles.text}>
-              <View>
-                <Text style={[styles.surfing, styles.labelTypo1]}>Surfing</Text>
-                <Text
-                  style={[
-                    styles.bestHawaiianIslands,
-                    styles.bestHawaiianIslandsTypo,
-                  ]}
-                >
-                  Best Hawaiian islands for surfing.
-                </Text>
-              </View>
-              <View style={styles.bottom}>
-                <Image
-                  style={styles.bottomChild}
-                  resizeMode="cover"
-                  source={require("../assets/group-11.png")}
-                />
-              </View>
-            </View>
-          </View>
-          <View style={styles.tileShadowBox}>
-            <Image
-              style={styles.imageIcon}
-              resizeMode="cover"
-              source={require("../assets/rectangle-6.png")}
-            />
-            <View style={styles.text}>
-              <View>
-                <Text style={[styles.surfing, styles.labelTypo1]}>Hula</Text>
-                <Text
-                  style={[
-                    styles.bestHawaiianIslands,
-                    styles.bestHawaiianIslandsTypo,
-                  ]}
-                >
-                  Try it yourself.
-                </Text>
-              </View>
-              <View style={styles.bottom}>
-                <Image
-                  style={styles.bottomChild}
-                  resizeMode="cover"
-                  source={require("../assets/group-11.png")}
-                />
-              </View>
-            </View>
-          </View>
-          <View style={styles.tileShadowBox}>
-            <Image
-              style={styles.imageIcon}
-              resizeMode="cover"
-              source={require("../assets/rectangle-61.png")}
-            />
-            <View style={styles.text}>
-              <View style={styles.top2}>
-                <Text style={[styles.surfing, styles.labelTypo1]}>
-                  Vulcanoes
-                </Text>
-                <Text
-                  style={[
-                    styles.volcanicConditionsCan,
-                    styles.bestHawaiianIslandsTypo,
-                  ]}
-                >
-                  Volcanic conditions can change at any time.
-                </Text>
-              </View>
-              <View style={styles.bottom}>
-                <Image
-                  style={styles.bottomChild}
-                  resizeMode="cover"
-                  source={require("../assets/group-11.png")}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View style={[styles.head, styles.headLayout]}>
-        <Image
-          style={[styles.imageIcon1, styles.headLayout]}
-          resizeMode="cover"
-          source={require("../assets/image1.png")}
-        />
-        <Text style={styles.welcomeToHawaiiContainer}>
-          <Text style={styles.welcomeToHawaiiContainer1}>
-            {`Welcome
+    <View style={{flex:1}}>
+    
+    <ScrollView
+      style={styles.homeFull}
+      indicatorStyle="white"
+      showsVerticalScrollIndicator={true}
+      showsHorizontalScrollIndicator={false}
+      alwaysBounceVertical
+      contentContainerStyle={styles.homeFullContent}>
+      <TopBar/>
+
+      <Banner/>
+
+      <Highlights {...navigation}/>
+
+      <Sections/>
+
+    </ScrollView>
+
+    <BookButton/>
+
+    <BottomNavigation{...navigation}/>
+
+    </View>
+  );
+};
+
+const TopBar = () => {
+  return (
+    <View style={styles.topBar}>
+    <Image
+      style={styles.alohaIcon}
+      resizeMode="cover"
+      source={require("../assets/aloha.png")}
+    />
+  </View>
+  );
+};
+
+const Banner = () => {
+  return (
+    <View style={[styles.head, styles.headLayout]}>
+    <Image
+      style={[styles.imageIcon, styles.allPosition]}
+      resizeMode="cover"
+      source={require("../assets/image1.png")}
+    />
+  
+      <Text style={styles.welcomeContainer}>
+        {`Welcome
 to`}
-            {` `}Hawaii
-          </Text>
+        {` `}Hawaii
+    </Text>
+  </View>
+  );
+};
+
+const Sections = () => {
+  return (
+    <View style={[styles.section, styles.sectionLayout]}>
+     <CategoriesSection/>
+     <TravelGuideSection/>
+    </View>
+  );
+};
+
+const Highlights = (navigation: NativeStackNavigationProp<RootStackParamsList, 'Home'>) => {
+  return (
+  <View style={styles.highlights}>
+        <Text style={[styles.highlights1, styles.categoriesPosition]}>
+        Highlights
         </Text>
+
+      <FlatList style={styles.flatListStyle}
+      horizontal
+      data={highlightsData}
+      renderItem={(item)=>
+        <View style={{padding: 10}}>
+          <View style={styles.highlightBox}>
+            <Image
+              style={styles.highlightsIcon}
+              resizeMode="cover"
+              source={item.item.image}/>
+            <View style={[styles.highlightsTextView, styles.itemFlexBox]}>
+                <Text style={[styles.highlightTitle, styles.surfingLayout]}>{item.item.title}</Text>
+                <Text
+                  style={[
+                    styles.hightlightSubtitle,
+                    styles.highlightSubtitleType,
+                  ]}>
+                  {item.item.subtitle}
+                </Text>
+              <View style={styles.bottom}>
+              <TouchableNativeFeedback onPress={() => {
+                navigation.navigate("Surfing", {
+                  description:item.item.description
+                })
+                }}>
+                <Image
+                  style={styles.bottomChild}
+                  resizeMode="cover"
+                  source={require("../assets/group-11.png")}
+                />
+                </TouchableNativeFeedback>
+              </View>
+            </View>
+          </View>
+          </View>
+       } />
       </View>
-      <View style={[styles.topBar, styles.topBarFlexBox]}>
-        <Image
-          style={styles.alohaIcon}
-          resizeMode="cover"
-          source={require("../assets/aloha1.png")}
-        />
-      </View>
-      <View style={styles.navBar}>
+  );
+};
+
+const CategoriesSection = () => {
+  return (
+    <View>
+    <View style={[styles.sectionChild, styles.sectionLayout]} />
+    <View style={[styles.categories, styles.categoriesPosition]}>
+    <Text style={[styles.categoriesType, styles.contactTypo]}>
+      Catergories
+    </Text>
+
+    <FlatList style={styles.categoriesListStyle}
+      data={categoriesData}
+      scrollEnabled={false}
+      renderItem={(item)=>
+        <View style={{paddingTop:10}}>
+        <View style={[styles.categoryStyle, styles.itemFlexBox]}>
+          <Text style={[styles.categoryTextStyle, styles.categoryTextStyleType]}>
+           {item.item.title}
+          </Text>
+          <Image
+            style={styles.itemChild}
+            resizeMode="cover"
+            source={require("../assets/group-1.png")}
+          />
+        </View>
+        </View>
+      }/>
+  </View>
+  </View>
+  );
+};
+
+
+const TravelGuideSection = () => {
+  return (
+    <View>
+    <View style={[styles.travelGuide, styles.categoriesPosition]}>
+          <Text style={[styles.categoriesType, styles.contactTypo]}>
+            Travel Guide
+          </Text>
+
+          <View style={[styles.container, styles.containerLayout]}>
+            <View style={[styles.containerChild, styles.containerLayout]} />
+            <Text style={[styles.guideStyle, styles.guidePosition]}>
+              {guideData.fullName}
+            </Text>
+            <Text style={[styles.guideSince, styles.guidePosition]}>
+              Guide since {guideData.joiningYear}
+            </Text>
+            <View style={[styles.button, styles.buttonSpaceBlock]}>
+              <Text style={[styles.contact, styles.contactTypo]}>Contact</Text>
+            </View>
+          </View>
+          <Image
+            style={styles.travelGuideChild}
+            resizeMode="cover"
+            source={require("../assets/ellipse-10.png")}
+          />
+        </View>
+    </View>
+  );
+};
+
+const BookButton = () => {
+  return (
+    <View style={[styles.button1, styles.navBarFlexBox]}>
+    <Text style={[styles.bookATrip, styles.contactTypo]}>Book a trip</Text>
+  </View>
+  );
+};
+
+const BottomNavigation = (navigation: NativeStackNavigationProp<RootStackParamsList, 'Home'>) => {
+  return (
+    <View>
+    <View style={[styles.navBar, styles.navBarFlexBox]}>
+
+      <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+                navigation.navigate("Surfing", {
+                  description:highlightsData[0].description
+                })
+              }}>
         <View style={[styles.menuItemNative, styles.menuItemSpaceBlock]}>
+  
           <Image
             style={[styles.icon, styles.iconLayout]}
             resizeMode="cover"
             source={require("../assets/icon.png")}
           />
-          <Text style={[styles.label, styles.labelTypo]}>Home</Text>
+          <Text style={[styles.labelSelected, styles.labelTypo]}>Home</Text>
         </View>
+        </TouchableNativeFeedback>
+
+
+        <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+                navigation.navigate("Surfing", {
+                  description:highlightsData[0].description
+                })
+              }}>
         <View style={styles.menuItemSpaceBlock}>
+    
           <Image
             style={styles.iconLayout}
             resizeMode="cover"
             source={require("../assets/surfing.png")}
           />
-          <Text style={[styles.label1, styles.labelTypo]}>Surfing</Text>
+          <Text style={[styles.labelUnSelected, styles.labelTypo]}>Surfing</Text>
         </View>
+        </TouchableNativeFeedback>
+
+
+
+        <TouchableNativeFeedback style={styles.menuItemSpaceBlock} onPress={() => {
+                navigation.navigate("Surfing", {
+                  description:highlightsData[0].description
+                })
+                }}>
+
         <View style={styles.menuItemSpaceBlock}>
+      
           <Image
             style={styles.iconLayout}
             resizeMode="cover"
             source={require("../assets/nightlife.png")}
           />
-          <Text style={[styles.label1, styles.labelTypo]}>Hula</Text>
+          <Text style={[styles.labelUnSelected, styles.labelTypo]}>Hula</Text>
         </View>
+
+        </TouchableNativeFeedback>
+
+        <TouchableNativeFeedback onPress={() => {
+                navigation.navigate("Surfing", {
+                  description:highlightsData[0].description
+                })
+                }}>
         <View style={styles.menuItemSpaceBlock}>
           <Image
             style={styles.iconLayout}
             resizeMode="cover"
             source={require("../assets/filter-hdr.png")}
           />
-          <Text style={[styles.label1, styles.labelTypo]}>Vulcano</Text>
+          <Text style={[styles.labelUnSelected, styles.labelTypo]}>Vulcano</Text>
         </View>
+        </TouchableNativeFeedback>
       </View>
-      <View style={[styles.button, styles.topBarFlexBox]}>
-        <Text style={styles.bookATrip}>Book a trip</Text>
       </View>
-    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  surfingFlexBox: {
-    textAlign: "left",
-    lineHeight: 20,
+  scrollScrollViewContent: {
+    flexDirection: "row",
+    paddingLeft: 10,
+    paddingEnd:20,
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
-  labelTypo1: {
-    color: Color.green,
-    fontFamily: FontFamily.header,
-    fontWeight: "700",
-  },
-  bestHawaiianIslandsTypo: {
-    marginTop: 16,
-    fontFamily: FontFamily.body,
-    textAlign: "left",
-    color: Color.dark,
-    lineHeight: 20,
-    fontSize: FontSize.body_size,
+  homeFullContent: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   headLayout: {
     height: 480,
     width: 360,
+  },
+  allPosition: {
     left: 0,
     position: "absolute",
   },
-  topBarFlexBox: {
-    paddingHorizontal: Padding.p_5xl,
-    alignItems: "center",
-    flexDirection: "row",
+  labelTypo1: {
+    fontFamily: FontFamily.iBMPlexMonoBold,
+    fontWeight: "700",
+  },
+  categoriesPosition: {
+    left: 16,
     position: "absolute",
   },
+  itemFlexBox: {
+    padding: Padding.p_5xl,
+    justifyContent: "space-between",
+    alignSelf: "stretch",
+  },
+  surfingLayout: {
+    lineHeight: 20,
+    textAlign: "left",
+  },
+  highlightSubtitleType: {
+    marginTop: 8,
+    color: Color.dark,
+    fontFamily: FontFamily.iBMPlexMonoRegular,
+    fontSize: FontSize.bodyBold_size,
+    textAlign: "left",
+    lineHeight: FontSize.bodyBold_lineHeight,
+  },
+  sectionLayout: {
+    height: 780,
+    width: 360,
+  },
+  contactTypo: {
+    fontSize: FontSize.bodyBold_size,
+    lineHeight: FontSize.bodyBold_lineHeight,
+    fontFamily: FontFamily.iBMPlexMonoBold,
+  },
+  categoryTextStyleType: {
+    fontFamily: FontFamily.iBMPlexMonoRegular,
+    fontSize: FontSize.bodyBold_size,
+    lineHeight:FontSize.bodyBold_lineHeight
+  },
+  containerLayout: {
+    height: 176,
+    width: 328,
+    left: 0,
+    position: "absolute",
+  },
+  guidePosition: {
+    left: 24,
+    color: Color.dark,
+    textAlign: "left",
+    lineHeight: 20,
+    paddingTop:5,
+    position: "absolute",
+  },
+  buttonSpaceBlock: {
+    paddingBottom: Padding.p_2xs,
+    paddingTop: Padding.p_4xs,
+    borderRadius: Border.br_5xs,
+    position: "absolute",
+    paddingHorizontal: Padding.p_5xl,
+  },
+  navBarFlexBox: {
+    alignItems: "flex-end",
+    justifyContent: "center",
+    shadowOpacity: 1,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    marginTop: 0,
+    flexDirection: "row",
+  },
   menuItemSpaceBlock: {
-    paddingVertical: Padding.p_base,
+    paddingTop: 16,
     paddingHorizontal: 0,
+    width:"80%",
     height: 72,
     alignItems: "center",
     flex: 1,
@@ -206,30 +382,69 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "stretch",
   },
-  highlights1: {
-    color: Color.dark,
-    fontFamily: FontFamily.header,
-    fontWeight: "700",
-    fontSize: FontSize.body_size,
-    textAlign: "left",
-    lineHeight: 20,
-    left: 0,
-    top: 0,
-    width: 358,
-    position: "absolute",
+  alohaIcon: {
+    width: 94,
+    height: 35,
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  topBar: {
+    height: 80,
+    paddingVertical: 0,
+    zIndex: 0,
+    paddingHorizontal: Padding.p_5xl,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    alignSelf: "center",
+    backgroundColor: Color.white,
   },
   imageIcon: {
+    top: 0,
+    height: 480,
+    width: 360,
+  },
+  welcomeContainer: {
+    top: 156,
+    fontFamily:FontFamily.iBMPlexMonoBold,
+    fontSize: FontSize.size_56,
+    lineHeight: FontSize.size_56,
+    display: "flex",
+    textAlign: "center",
+    left: 0,
+    position: "absolute",
+    width: "100%",
+    alignItems: "center",
+  },
+  head: {
+    zIndex: 1,
+    marginTop: 0,
+  },
+  highlights1: {
+    width: 344,
+    fontFamily: FontFamily.iBMPlexMonoBold,
+    color: Color.dark,
+    fontSize: FontSize.bodyBold_size,
+    textAlign: "left",
+    lineHeight:FontSize.bodyBold_lineHeight,
+    top: 0,
+    position: "absolute",
+    left: 16,
+  },
+  highlightsIcon: {
     width: 368,
     height: 170,
   },
-  surfing: {
-    fontSize: FontSize.header_size,
+  highlightTitle: {
+    paddingTop:5,
     textAlign: "left",
-    lineHeight: 20,
     color: Color.green,
+    fontSize: FontSize.size_5xl,
+    fontFamily: FontFamily.iBMPlexMonoBold,
   },
-  bestHawaiianIslands: {
-    width: 318,
+  hightlightSubtitle: {
+    width: "100%",
+    paddingEnd:10
   },
   bottomChild: {
     width: 40,
@@ -237,142 +452,185 @@ const styles = StyleSheet.create({
   },
   bottom: {
     justifyContent: "flex-end",
-    alignSelf: "stretch",
     flexDirection: "row",
-  },
-  text: {
-    padding: Padding.p_5xl,
-    justifyContent: "space-between",
     alignSelf: "stretch",
+  },
+  highlightsTextView: {
     height: 170,
   },
-  tile1: {
+  highlightBox: {
+    overflow: "hidden",
     width: 304,
-    elevation: 16,
-    shadowRadius: 16,
-    shadowColor: "rgba(0, 128, 128, 0.16)",
-    borderRadius: Border.br_5xs,
     shadowOpacity: 1,
     shadowOffset: {
-      width: 0,
-      height: 0,
+      width: 1,
+      height: 1,
     },
-    overflow: "hidden",
-    backgroundColor: Color.white,
-  },
-  tileShadowBox: {
-    marginLeft: 16,
-    width: 304,
+    marginEnd:5,
+    shadowColor: "gray",
     borderRadius: Border.br_5xs,
-    shadowOpacity: 1,
     elevation: 16,
     shadowRadius: 16,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowColor: "rgba(0, 128, 128, 0.16)",
-    overflow: "hidden",
     backgroundColor: Color.white,
   },
+
   volcanicConditionsCan: {
     alignSelf: "stretch",
   },
   top2: {
     alignSelf: "stretch",
   },
-  scroll: {
-    top: 44,
-    width: 344,
-    flexDirection: "row",
-    left: 0,
-    position: "absolute",
+  flatListStyle: {
+    top: 30,
+    width: "100%",
+    paddingStart:5,
+    marginEnd:5
   },
-  highlights: {
-    top: 600,
-    left: 16,
-    height: 384,
-    width: 358,
-    position: "absolute",
-  },
-  imageIcon1: {
-    top: 0,
-  },
-  welcomeToHawaiiContainer1: {
+
+  categoriesListStyle: {
+    top: 30,
     width: "100%",
   },
-  welcomeToHawaiiContainer: {
-    top: 156,
-    fontSize: FontSize.size_37xl,
-    lineHeight: 56,
-    display: "flex",
-    alignItems: "center",
-    textAlign: "center",
+  highlights: {
+    height: 384,
+    zIndex: 5,
+    marginTop: 20,
     width: 360,
-    fontFamily: FontFamily.header,
-    fontWeight: "700",
+  },
+  sectionChild: {
+    backgroundColor: Color.light,
     left: 0,
     position: "absolute",
-  },
-  head: {
-    top: 80,
-  },
-  alohaIcon: {
-    width: 94,
-    height: 35,
-  },
-  topBar: {
-    width: 359,
-    height: 80,
-    paddingVertical: 0,
-    justifyContent: "space-between",
-    left: 0,
     top: 0,
-    paddingHorizontal: Padding.p_5xl,
+  },
+  categoriesType: {
+    color: Color.dark,
+    textAlign: "left",
+    left: 0,
+    position: "absolute",
+    top: 0,
+  },
+  categoryTextStyle: {
+    color: Color.dark,
+    textAlign: "left",
+    lineHeight: 20,
+  },
+  itemChild: {
+    width: 16,
+    height: 16,
+  },
+  categoryStyle: {
+    borderRadius: Border.br_5xs,
     backgroundColor: Color.white,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  item1: {
+    marginTop: 8,
+    borderRadius: Border.br_5xs,
+    backgroundColor: Color.white,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  all: {
+    top: 36,
+    width: 328,
+  },
+  categories: {
+    top: 30,
+    height: 408,
+    width: 328,
+  },
+  containerChild: {
+    borderRadius: Border.br_5xs,
+    backgroundColor: Color.white,
+    top: 0,
+  },
+  guideStyle: {
+    top: 24,
+    width: 211,
+    fontSize: FontSize.size_5xl,
+    fontFamily: FontFamily.bodyBold,
+    lineHeight:FontSize.bodyBold_lineHeight
+  },
+  guideSince: {
+    top: 59,
+    fontFamily: FontFamily.iBMPlexMonoRegular,
+    fontSize: FontSize.bodyBold_size,
+    lineHeight: FontSize.bodyBold_lineHeight
+  },
+  contact: {
+    color: Color.green,
+    textAlign: "center",
+  },
+  button: {
+    top: 112,
+    borderWidth: 1,
+    justifyContent: "center",
+    fontSize:FontSize.bodyBold_size,
+    lineHeight:FontSize.bodyBold_lineHeight,
+    fontFamily:FontFamily.iBMPlexMonoBold,
+    paddingBottom: Padding.p_2xs,
+    paddingTop: Padding.p_4xs,
+    borderColor: Color.green,
+    borderStyle: "solid",
+    left: 24,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  container: {
+    top: 36,
+  },
+  travelGuideChild: {
+    top: 55,
+    left: 230,
+    width: 74,
+    height: 74,
+    position: "absolute",
+  },
+  travelGuide: {
+    top: 468,
+    height: 212,
+    width: 328,
+  },
+  section: {
+    zIndex: 3,
+    marginTop: 20,
   },
   icon: {
     overflow: "hidden",
   },
-  label: {
+  labelSelected: {
     color: Color.green,
-    fontFamily: FontFamily.header,
+    fontFamily: FontFamily.bodyBold,
     fontWeight: "700",
   },
   menuItemNative: {
-    borderStyle: "solid",
-    borderColor: Color.green,
     borderBottomWidth: 4,
+    borderColor: Color.green,
+    borderStyle: "solid",
+    paddingVertical: Padding.p_base,
+    paddingHorizontal: 0,
+    height: 72,
   },
-  label1: {
+  labelUnSelected: {
     fontWeight: "600",
     fontFamily: FontFamily.iBMPlexMonoSemiBold,
     color: Color.dark,
   },
   navBar: {
-    bottom: 0,
     shadowColor: "rgba(81, 81, 224, 0.24)",
-    width: 360,
-    shadowOpacity: 1,
+    zIndex: 4,
     elevation: 16,
     shadowRadius: 16,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    flexDirection: "row",
-    left: 0,
-    position: "absolute",
+    alignItems: "flex-end",
+    alignSelf: "stretch",
   },
   bookATrip: {
     color: Color.white,
     textAlign: "center",
-    fontFamily: FontFamily.header,
-    fontWeight: "700",
-    lineHeight: 20,
-    fontSize: FontSize.body_size,
   },
-  button: {
+  button1: {
     marginLeft: -164,
     bottom: 88,
     left: "50%",
@@ -380,25 +638,83 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
     backgroundColor: Color.green,
-    width: 328,
-    justifyContent: "center",
+    zIndex: 5,
+    paddingBottom: 15,
     paddingTop: Padding.p_4xs,
-    paddingBottom: Padding.p_2xs,
     borderRadius: Border.br_5xs,
-    shadowOpacity: 1,
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
+    position: "absolute",
     paddingHorizontal: Padding.p_5xl,
+    width: 328,
+    height:45
   },
-  home: {
-    height: 800,
-    overflow: "hidden",
+  homeFull: {
+    maxWidth: "100%",
     width: "100%",
     flex: 1,
     backgroundColor: Color.white,
   },
 });
 
-export default Home;
+
+
+// Using dummy data until remote data is available / configured
+
+
+// Highlights data
+const highlightsData = [{          
+  id: 0,
+  title : "Surfing",
+  subtitle : "Best Hawaiian islands for surfing.",
+  image: require("../assets/image.png"),
+  description: "Hawaii is the capital of modern surfing. This group of Pacific islands gets swell from all directions, so there are plenty of pristine surf spots for all."
+},
+{          
+  id: 1,
+  title : "Hula",
+  subtitle : "Try it yourself.",
+  image: require("../assets/rectangle-6.png"),
+  description: "Hawaii is the capital of modern surfing. This group of Pacific islands gets swell from all directions, so there are plenty of pristine surf spots for all."
+},
+{          
+  id: 2,
+  title : "Vulcanoes",
+  subtitle : "Volcanic conditions can change at any time.",
+  image: require("../assets/rectangle-61.png"),
+  description: "Hawaii is the capital of modern surfing. This group of Pacific islands gets swell from all directions, so there are plenty of pristine surf spots for all."
+}
+]
+
+
+// Categories data
+const categoriesData = [{          
+  id: 0,
+  title : "Adventure"
+},
+{          
+  id: 1,
+  title : "Culinary"
+},
+{          
+  id: 2,
+  title : "Eco-tourism"
+},
+{          
+  id: 3,
+  title : "Family"
+},
+{          
+  id: 4,
+  title : "Sport"
+}
+]
+
+// Guide data
+const guideData = {          
+  id: 0,
+  title : "Adventure",
+  fullName: "Madwin Malone",
+  joiningYear: "2012",
+  contact: "9999999999"
+}
+
+export default HomeFull;
