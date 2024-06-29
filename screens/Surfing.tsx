@@ -5,13 +5,13 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamsList } from "../routes/HomeStack";
 import { useRoute } from "@react-navigation/native";
 import { RouteProp } from "@react-navigation/native";
+
+
 interface SurfingScreenProps {
   navigation: NativeStackNavigationProp<RootStackParamsList, 'Surfing'>
 }
 
-
 const Surfing = ({ navigation }: SurfingScreenProps) => {
-
 
   const route: RouteProp<{ params: { description: string } }, 'params'> = useRoute()
   const description: string = route.params.description
@@ -87,7 +87,6 @@ const TopSpots = () => {
       <Text style={[styles.topSpots, styles.spotType]}>Top spots</Text>
       <View style={[styles.itemParent, styles.topSpotsPosition]}>
 
-
         <FlatList style={styles.flatListStyle}
           data={topSpotsData}
           scrollEnabled={false}
@@ -111,21 +110,26 @@ const TravelGuideSection = () => {
     <View style={styles.section1}>
       <View style={styles.sectionChild} />
       <View style={styles.travelGuide}>
+
         <Text style={[styles.travelGuide1, styles.spotType]}>
           Travel Guide
         </Text>
+
         <View style={styles.container}>
           <View style={styles.containerChild} />
           <Text style={[styles.guide, styles.activityType]}>
             {guideData.fullName}
           </Text>
+
           <Text style={[styles.guideSince, styles.descriptionType]}>
             Guide since {guideData.joiningYear}
           </Text>
+
           <View style={[styles.button, styles.buttonSpaceBlock]}>
             <Text style={[styles.contact, styles.spotType]}>Contact</Text>
           </View>
         </View>
+
         <Image
           style={styles.travelGuideChild}
           resizeMode="cover"
@@ -648,7 +652,7 @@ const topSpotsData = [{
 const guideData = {
   id: 0,
   title: "Adventure",
-  fullName: "Madwin Malone",
+  fullName: "Hadwin Malone",
   joiningYear: "2012",
   contact: "9999999999",
   image: require("../assets/ellipse-10.png")
