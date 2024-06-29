@@ -1,16 +1,14 @@
-const Stack = createNativeStackNavigator();
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-
 import Surfing from "../screens/Surfing";
 import Home from "../screens/Home";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+const Stack = createNativeStackNavigator();
 export type RootStackParamsList = {
-  Home:undefined,
-  Surfing:{
-    description:string
+  Home: undefined,
+  Surfing: {
+    description: string
   }
 };
 
